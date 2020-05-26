@@ -9,12 +9,20 @@ class Store < ActiveRecord::Base
   validates :name, length: { minimum: 3 }
   validates :annual_revenue, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate :apparel_type
+  before_destroy :check_employees
 
   private
 
+  def check_employees
+    if employees.count() > 0
+      errors.add(:employees, "Too many employees!")
+      return false
+    end 
+  end
+
   def apparel_type
     if !mens_apparel && !womens_apparel
-      errors.add("You need to sell at least mens or womens apparel")
+      errors.add(:apparel, "You need to sell at least mens or womens apparel")
     end
   end
 end
