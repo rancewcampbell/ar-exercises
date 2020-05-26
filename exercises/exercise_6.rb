@@ -19,6 +19,14 @@ class Employee < ActiveRecord::Base
     greater_than_or_equal_to: 40, 
     less_than_or_equal_to: 200
   }
+
+  before_create :set_password
+  
+  private
+  def set_password
+    password = (0...8).map { (65 + rand(26)).chr }.join
+    self.password = password
+  end
 end
 
 @store1.employees.create(first_name: "Andy", last_name: "Lindsay", hourly_rate: 60)
