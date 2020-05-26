@@ -10,3 +10,9 @@ puts "Exercise 7"
 puts "----------"
 
 # Your code goes here ...
+puts "What is the store name?"
+print "> "
+store_name = $stdin.gets.chomp
+
+@store4 = Store.create(name: store_name, annual_revenue: 1)
+
